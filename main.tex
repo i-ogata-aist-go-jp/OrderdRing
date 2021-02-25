@@ -1,0 +1,309 @@
+\documentclass{article}
+\bibliographystyle{plain} 
+
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+
+%%% Examples of Article customizations
+% These packages are optional, depending whether you want the features they provide.
+% See the LaTeX Companion or other references for full information.
+
+%%% PAGE DIMENSIONS
+\usepackage{geometry} % to change the page dimensions
+\geometry{a4paper} % or letterpaper (US) or a5paper or....
+% \geometry{margins=2in} % for example, change the margins to 2 inches all round
+% \geometry{landscape} % set up the page for landscape
+%   read geometry.pdf for detailed page layout information
+
+\usepackage{graphicx} % support the \includegraphics command and options
+
+% \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+% These packages are all incorporated in the memoir class to one degree or another...
+
+%%% SECTION TITLE APPEARANCE
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\mdseries\upshape} % (See the fntguide.pdf for font help)
+% (This matches ConTeXt defaults)
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{cmll,braket,stmaryrd}
+\usepackage{backnaur}
+\usepackage{url}
+
+\usepackage{forest}
+\usepackage{tikz-qtree}
+\usetikzlibrary{matrix}
+\usepackage{bussproofs}  
+
+
+%%% END Article customizations
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{fact}[theorem]{fact}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+%% newcommands
+
+\newcommand{\defeq}{\mathrel{\mathop:}=}
+\newcommand{\eqdef}{\mathrel{\mathop=}:}
+\newcommand{\QTargument}{{(\mbox{\textendash})}}
+\newcommand{\ONE}{\mbox{\boldmath{1}}}
+\newcommand{\ZERO}{\mbox{\boldmath{0}}}
+
+\begin{document}
+
+\section{Partial and Total Order}
+
+\begin{definition} [Cartesian Product]
+The Cartesian product of two sets $A$ and $B$ 
+is defined to be the set of all points $(a,b)$
+where $a \in A$ and $b \in B$. 
+It is denoted $A \times B$.
+\end{definition}
+
+\begin{definition} [Binary Relation]
+Let $S$ be a set of objects.
+A binary relation on $S$ is a subset of the Cartesian product $S \times S$.
+\end{definition}
+
+\begin{definition}[preorder]
+Let $A$ be a set. A {\em preorder} on $A$ is a binary relation $\leq$ which is
+\begin{enumerate}
+\item {\em reflexive}: for all $a \in A$,  $a \leq a$,
+\item {\em transitive}:  if $a \leq b$ and $b \leq c$, then $a \leq c$, and
+\end{enumerate}
+\end{definition}
+
+A partial order is a preorder which is antisymmetric.
+
+\begin{definition}[partial order]
+Let $A$ be a set. A {\em partial order} on $A$ is a binary relation $\leq$ which is
+\begin{enumerate}
+\item {\em reflexive}: for all $a \in A$,  $a \leq a$,
+\item {\em transitive}:  if $a \leq b$ and $b \leq c$, then $a \leq c$, and
+\item {\em antisymmetric}: if $a \leq b$ and $b \leq a$, then $a = b$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[total preorder]
+A {\em total preorder} on $A$ is a binary relation $\leq$ such that; 
+\begin{enumerate}
+\item {\em transitive}:  if $a \leq b$ and $b \leq c$, then $a \leq c$, and
+\item {\em total}: for all $a,b \in A$, 
+one of $a \leq b$,$b \leq a$ holds. 
+\end{enumerate}
+From totality, we have reflexivity ($ \forall a \in A, a \leq a$). 
+\end{definition}
+
+A total order is a total preorder which is antisymmetric.
+In other words, a total order is a total preorder which is also a partial order.
+
+\begin{definition}[total order]
+A {\em total order} on $A$ is a binary relation $\leq$ such that; 
+\begin{enumerate}
+\item {\em partial order}: $(A,\leq)$ is a poset,
+\item {\em total}: for all $a,b \in A$, 
+one of $a \leq b$,$b \leq a$ holds. 
+\end{enumerate}
+Then a double $(A,\leq)$ is called a totally ordered set. 
+\end{definition}
+
+From the point of view of proof,
+the reflexive rule is axiom, while the transitive and the antisymmetrc rules are inference rules. 
+
+In this article, these axioms and inference rules are represented pictorially as; 
+
+\begin{center}
+\begin{prooftree}
+	\AxiomC{} \UnaryInfC{$a \leq a$}
+\DisplayProof  \hskip 2cm
+	\AxiomC{$a \leq b$} \AxiomC{$b \leq c$}
+    \BinaryInfC{$a \leq c$}
+\DisplayProof  \hskip 2cm
+	\AxiomC{$a \leq b$} \AxiomC{$b \leq a$}
+    \BinaryInfC{$a = b$}
+\end{prooftree}
+\end{center}
+
+\begin{definition} [poset and its opposite]
+Let $A$ be a set and $\leq$ be a partial order. 
+A {\em poset} (short for partially ordered set) is defined to be a double  $(A,\leq)$.
+%
+Its {\em opposite}, denoted $(A^{\sf op},\geq)$, 
+is the poset with the same underlying set, with $a \geq b$ in $A^{\sf op}$ 
+iff $a \leq b$ in $A$. 
+\end{definition}
+
+\subsection{Commutative Monoids and Groups}
+% magma
+\begin{definition} [commutative magma]
+A {\em commutative magma} is a basic kind of (commutative) algebraic structure. 
+It consists of a set $M$ accompanied with a binary operation "$\cdot$" 
+which is a map: 
+$ {\QTargument} { \cdot } {\QTargument} : M \cdot M \longrightarrow M$.  
+That is, it sends any two elements $a,b \in M$ to another element $a \cdot b$.
+%
+In set theoretic notation:
+\begin{enumerate}
+\item {\em closure law}:   $ \forall a,b \in M, a \cdot b \in M $.
+\item {\em commutative law}:  for every $a,b \in M$ we have $a \cdot b = b \cdot a$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[commutative semigroup]
+A {\em commutative semigroup} is a triple 
+$(S,\cdot)$. 
+The following conditions hold:
+%
+\begin{enumerate} 
+\item {\em commutative magma}:  $(S,\cdot)$ is a commutative magma,
+\item {\em associative law}:  for every $a,b,c \in S$,
+we have $a \cdot ( b \cdot c) =  (a \cdot b) \cdot c$.
+\end{enumerate}
+\end{definition} 
+
+\begin{definition}[commutative monoid]
+A {\em commutative  monoid} is a triple 
+$(M,\cdot,\ONE)$  where $\ONE \in M$. 
+The following conditions hold:
+%
+\begin{enumerate} 
+\item {\em commutative semigroup}:  $(M,\cdot)$ is a commutative semigroup,
+\item {\em neutrality law}:  for all  $a \in M$  we have $\ONE \cdot a = a$.
+\end{enumerate}
+\end{definition} 
+
+\begin{definition}[commutative group]
+A {\em commutative group} is a triple 
+$(G,\cdot,\ONE) $  where $\ONE \in G$. 
+The following conditions hold:
+%
+\begin{enumerate} 
+\item {\em commutative monoid}:  $(G,\cdot,\ONE) $ is a commutative monoid.
+\item {\em inverse element}:  for each $a \in G$,
+we have an inverse element $b \in G$ 
+such that $a \cdot b =  b \cdot a = \ONE$.
+\end{enumerate}
+\end{definition} 
+
+\section{Ordered Ring}
+
+\begin{definition}[commutative semiring]
+A commutative (i.e. $a \otimes b = b \otimes a$)
+{\em semiring} is a quintuple $(R,+,0,\otimes,1) $.
+The following conditions hold:
+%
+\begin{enumerate} 
+\item {\em additive commutative monoid}:
+$(R,+,0)$ is a commutative monoid with identity element $0$,
+\item {\em multiplicative commutative monoid}:
+$(R,\otimes,1)$ is a commutative monoid with identity element $1$, 
+\item {\em anihilative law}:  $a \otimes 0 = 0$,
+\item {\em distributive law}:
+$\otimes$ distributes over $+$;
+\[ c \otimes (a + b) = (c+a) \otimes (c+b) \]
+\end{enumerate}
+\end{definition}
+
+
+The difference between rings and semirings
+is that addition yields only a commutative monoid, 
+not necessarily a commutative group. Explicitly,
+
+\begin{definition}[commutative ring]
+A {\em commutative ring} is a quintuple $(R,+,0,\otimes,1) $.
+The following conditions hold:
+%
+\begin{enumerate} 
+\item {\em abelian group}:
+$(R,+,0)$ is an abelian group(commutative group) with identity element $0$,
+\item {\em multiplicative commutative monoid}:
+$(R,\otimes,1)$ is a commutative monoid with identity element $1$, 
+\item {\em distributive law}:
+$\otimes$ distributes over $+$;
+\[ c \otimes (a + b) = (c+a) \otimes (c+b) \]
+\end{enumerate}
+\end{definition}
+
+\begin{fact}
+$a \otimes 0 = 0$ (anihilative law) follows from the other ring conditions.
+\end{fact}
+\begin{proof}
+First, we show that $b = b+b$ (idempotency) implies $b = 0$
+in groups. 
+If $c$ is an inverse of $b$ 
+then $ 0 = b + c = (b + b) + c = b + (b + c) = b + 0 = b$.
+Thus 
+$ a \otimes 0 = a \otimes (0 + 0) =  (a \otimes 0) + (a \otimes 0) $
+implies $a \otimes 0 = 0$. 
+\end{proof}
+
+\begin{fact}
+If $c$ is an inverse of $b$ 
+then $a \otimes c$ is an inverse of $a \otimes b$. 
+\end{fact}
+\begin{proof}
+\[ (a \otimes b) + (a \otimes c) = a \otimes (b + c) = a \otimes 0 = 0 \].
+\end{proof}
+
+\begin{definition}[field]
+A {\em field} is a quintuple $(R,+,0,\otimes,1)$.
+The following conditions hold:
+%
+\begin{enumerate} 
+\item {\em commutative ring}:
+$(R,+,0,\otimes,1)$ is a commutative ring,
+\item {\em multiplicative inverse}: every nonzero element 
+has a multiplicative inverse. 
+\end{enumerate}
+\end{definition}
+
+
+\subsection{Ordered Commutative Groups and Rings}
+
+
+\begin{definition} [Ordered Abelian Groups]
+A {\em ordered abelian groups} is a commutative group $G$
+with a total order $\leq$  such that for all $a,b,c \in G$,
+\begin{enumerate}
+\item {\em order preserving}: if $a \leq b$ then $a + c \leq b + c$.
+\end{enumerate}
+\end{definition}
+
+Every Archimedean group (a bi-ordered group satisfying an Archimedean property) 
+is isomorphic to a subgroup of the additive group of real numbers (\cite{fuchs2001modules}, p.61 ).
+The proof appears in  \cite{Fuchs1983}.
+
+\begin{definition} [Ordered rings]
+A {\em commutative ordered ring} is a commutative ring $R$
+with a total order $\leq$  such that for all $a,b,c \in R$,
+\begin{enumerate}
+\item {\em order preserving}: if $a \leq b$ then $a + c \leq b + c$.
+\item {\em positiveness} if $0 \leq a$ and $0 \leq b$ then $0 \leq a \otimes b$.
+\end{enumerate}
+\end{definition}
+%
+\bibliography{BiB/algebra}
+%
+\end{document}
+
+
